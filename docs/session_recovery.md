@@ -15,9 +15,9 @@ Read /Users/didi/work/llm_learning_claude_code/docs/session_recovery.md
 ### 步骤2: 恢复上下文后我会知道
 - ✅ 你的学习风格：诊断式分层，当前层级L2.5
 - ✅ 学习目标：面试准备 + 基础巩固
-- ✅ 当前进度：M1-01已完成，M1-03/04进行中
+- ✅ 当前进度：以 `docs/progress.md` 为准（模块编号口径见 `docs/taxonomy.md`）
 - ✅ 薄弱点：Attention softmax细节、MQA计算量理解、LayerNorm原因
-- ✅ 待办：3个费曼输出未完成
+- ✅ 待办：以 `docs/progress.md` / `docs/reminder_config.md` 为准
 
 ### 步骤3: 继续学习
 根据上次进度，我会提供3个选项：
@@ -41,11 +41,11 @@ Read /Users/didi/work/llm_learning_claude_code/docs/session_recovery.md
 ### 学习历史
 ```
 2026-03-06: 第1次学习
-├── 模块: M1 Transformer架构
+├── 模块: M01 Transformer架构
 ├── 主题: Attention回顾、Pre/Post LN、MQA/GQA、Flash Attention
 ├── 时长: ~1小时
 ├── 表现: 4/5题答对或部分正确
-└── 遗留: 3个费曼输出待完成
+└── 遗留: 当时有3个费曼输出（现已完成）
 ```
 
 ### 当前薄弱点（需要反复测试）
@@ -55,7 +55,7 @@ Read /Users/didi/work/llm_learning_claude_code/docs/session_recovery.md
 
 ### 下次学习建议
 - **如果时间<30分钟**: 完成费曼输出 + 薄弱点复习
-- **如果时间>30分钟**: 继续M1-02位置编码深度解析 或 开始Mini-GPT项目
+- **如果时间>30分钟**: 继续 M03 分词与表示 或推进 M12 推理优化补完
 
 ---
 

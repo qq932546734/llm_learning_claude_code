@@ -38,74 +38,77 @@
 
 ## 知识图谱
 
+> 模块编号统一口径：`M01` ~ `M16`（见 `docs/taxonomy.md`）。
+
 ```
 Phase 1: 基础筑基
-├── 模块1: Transformer 架构深度解析
+├── M01 模块1: Transformer 架构深度解析
 │   ├── 1.1 Self-Attention 机制
 │   ├── 1.2 Multi-Head Attention
 │   ├── 1.3 Position Encoding
 │   ├── 1.4 Feed-Forward Network
-│   └── 1.5 Layer Norm & Residual
-├── 模块2: 预训练理论与方法
+│   ├── 1.5 Layer Norm & Residual
+│   └── 1.6 Transformer 代码实战（Mini-GPT）
+├── M02 模块2: 预训练理论与方法
 │   ├── 2.1 语言建模目标 (MLM/CLM)
 │   ├── 2.2 预训练策略与技巧
 │   └── 2.3  Scaling Laws
-├── 模块3: 分词与表示
+├── M03 模块3: 分词与表示
 │   ├── 3.1 Tokenization 演进 (BPE/WordPiece/SentencePiece)
 │   └── 3.2 Embedding 空间理解
 
 Phase 2: 进阶架构
-├── 模块4: 高效注意力变体
+├── M04 模块4: 高效注意力变体
 │   ├── 4.1 稀疏注意力 (Sparse Attention)
 │   ├── 4.2 线性注意力 (Linear Attention)
 │   ├── 4.3 多头查询注意力 (MQA/GQA)
 │   └── 4.4 FlashAttention
-├── 模块5: 长文本建模
+├── M05 模块5: 长文本建模
 │   ├── 5.1 位置编码外推
 │   ├── 5.2 上下文压缩
 │   └── 5.3 Ring Attention / Longformer
-├── 模块6: 模型并行与效率
+├── M06 模块6: 模型并行与效率
 │   ├── 6.1 数据/模型/流水线并行
 │   ├── 6.2 ZeRO 优化器
 │   └── 6.3 混合精度训练
 
 Phase 3: 对齐与微调
-├── 模块7: 指令微调 (Instruction Tuning)
+├── M07 模块7: 指令微调 (Instruction Tuning)
 │   ├── 7.1 数据构建与清洗
 │   ├── 7.2 LoRA / QLoRA / DoRA
 │   └── 7.3 全参数 vs 参数高效微调
-├── 模块8: 人类反馈强化学习 (RLHF)
+├── M08 模块8: 人类反馈强化学习 (RLHF)
 │   ├── 8.1 Reward Model 训练
 │   ├── 8.2 PPO 算法详解
 │   ├── 8.3 DPO / IPO 等替代方案
 │   └── 8.4 RLHF 的局限与改进
-├── 模块9: 高级对齐技术
+├── M09 模块9: 高级对齐技术
 │   ├── 9.1 Constitutional AI
 │   ├── 9.2 RLAIF
 │   └── 9.3 安全与 Red Teaming
 
 Phase 4: 推理与应用
-├── 模块10: 解码策略
+├── M10 模块10: 解码策略
 │   ├── 10.1 贪心/Beam Search/Sampling
 │   ├── 10.2 Temperature/Top-k/Top-p
 │   ├── 10.3 Speculative Decoding
 │   └── 10.4 Structured Decoding
-├── 模块11: 提示工程进阶
+├── M11 模块11: 提示工程进阶
 │   ├── 11.1 上下文学习原理
 │   ├── 11.2 Chain-of-Thought
 │   ├── 11.3 ReAct / Tool Use
 │   └── 11.4 自动提示优化
-└── 模块12: 生产部署
+└── M12 模块12: 生产部署
     ├── 12.1 量化技术 (INT8/INT4/GPTQ/AWQ)
     ├── 12.2 服务框架 (vLLM/TGI)
     ├── 12.3 缓存与批处理策略
     └── 12.4 监控与评估
 
 Phase 5: 前沿探索 (可选)
-├── 模块13: 多模态 LLM
-├── 模块14: Agent 与工具使用
-├── 模块15: 模型可解释性
-└── 模块16: 测试时计算扩展 (o1-like)
+├── M13 模块13: 多模态 LLM
+├── M14 模块14: Agent 与工具使用
+├── M15 模块15: 模型可解释性
+└── M16 模块16: 测试时计算扩展 (o1-like)
 ```
 
 ## 学习进度
@@ -122,8 +125,8 @@ Phase 5: 前沿探索 (可选)
 3. 进入学习 → 根据层级获取定制化内容
 4. 费曼输出 → 用自己的话解释核心概念
 5. 刻意练习 → 完成针对性练习
-6. 记录进度 → 更新 progress.md
-7. 生成笔记 → 将你的理解写入 notes/
+6. 记录进度 → 更新 docs/progress.md
+7. 记录提问 → 更新 docs/question_analysis.md（或自动记录）
 ```
 
 ## 文档结构
@@ -131,25 +134,36 @@ Phase 5: 前沿探索 (可选)
 ```
 llm_learning_claude_code/
 ├── README.md                 # 本项目说明
-├── docs/
-│   ├── progress.md          # 学习进度追踪
-│   ├── teaching_guide.md    # 详细教学指南
-│   └── roadmap.md           # 完整学习路线图
-├── modules/                 # 各模块内容
-│   ├── m01_transformer/
-│   ├── m02_pretraining/
-│   └── ...
-├── notes/                   # 你的学习笔记
-├── exercises/               # 练习题与答案
-├── projects/                # 实战项目
-└── checkpoints/             # 阶段测评记录
+├── docs/                     # 进度/提醒/提问系统
+│   ├── README.md
+│   ├── taxonomy.md           # 模块编号口径（唯一源）
+│   ├── progress.md           # 学习进度追踪
+│   ├── reminder_config.md    # 学习提醒配置
+│   ├── question_analysis.md  # 提问档案与分析
+│   ├── session_sop.md        # 会话 SOP
+│   └── session_recovery.md   # 会话恢复指南
+├── curriculum/               # 课程视图（规划用）
+│   ├── README.md
+│   ├── modules_outline.md    # A01-A08 宏模块
+│   └── syllabus.md           # S01-S16 学习路径线
+└── modules/                  # 课程内容（学习入口，M01-M16）
+    ├── README.md
+    ├── M01_transformer.md
+    ├── M02_pretraining.md
+    ├── M03_tokenization_and_representation.md
+    └── ...
 ```
 
 ## 开始第一次诊断
 
-准备好开始了吗？我们将从 **模块1: Transformer 架构** 开始，首先进行前置诊断。
+准备好开始了吗？
+- 学习入口：`modules/README.md`
+- 编号口径：`docs/taxonomy.md`
+- 进度追踪：`docs/progress.md`
+
+我们默认从 **M01: Transformer 架构** 开始，先做前置诊断。
 
 运行以下命令或直接告诉我：
 ```bash
-# 我想开始模块1的诊断
+# 我想开始 M01 的诊断
 ```
