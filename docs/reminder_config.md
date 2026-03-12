@@ -3,7 +3,7 @@
 ## 学习者信息
 - **学习目标**: 面试准备 + 基础巩固
 - **可用时间**: 灵活安排
-- **上次学习**: 2026-03-12（M12-01 推理优化：KV cache/连续batching/Paged KV/chunked prefill/投机解码/量化概念）
+- **上次学习**: 2026-03-12（M03 分词与表示：subword/BPE-WordPiece-Unigram/embedding参数量/tied embeddings/tokenizer 对 serving 成本的影响）
 - **当前模块**: M03 - 分词与表示
 
 > 口径说明：模块编号统一使用 `M01` ~ `M16`（见 `docs/taxonomy.md`）。
@@ -30,7 +30,7 @@
 ## 当前复习队列
 | 模块 | 状态 | 下次动作 | 建议时间 |
 |------|------|----------|----------|
-| M03 分词与表示 | 新学 | 3 题诊断 + 1 次费曼输出 + 1 道参数量估算 | 24 小时内 |
+| M03 分词与表示 | 会但不稳 | 1 次 tokenizer 对比表复述 + 1 道中英混合代码设计题 | 48 小时内 |
 | M12 推理优化 | 会但不稳 | 抽查 TTFT/TPOT/KV cache/Paged KV | 3 天内 |
 | M08 RLHF | 已掌握 | 抽查 DPO margin、beta、长度偏置 | 7 天内 |
 | M06 分布式训练 | 待回访 | 复述 ZeRO 1/2/3 与 FSDP 差异 | 7 天内 |
@@ -53,9 +53,9 @@
 
 ## 复习检测题（当前优先）
 ### M03 分词与表示
-1. subword 相比纯词/纯字的主要收益和代价是什么？
-2. BPE/WordPiece/SentencePiece(Unigram) 的训练目标有什么关键差别？
-3. `vocab_size=50k, d_model=4096` 时 embedding 参数量级是多少？tied embeddings 如何改变参数量？
+1. 为什么不能简单说“大 vocab 一定更好”或“短序列一定更好”？
+2. BPE / WordPiece / SentencePiece(Unigram) 的训练目标有什么关键差别？
+3. tokenizer 为什么会同时影响 prefill 和 decode 成本？
 
 ### M12 推理优化
 1. TTFT / TPOT / token/s 分别反映什么体验？

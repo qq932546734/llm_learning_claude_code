@@ -3,6 +3,10 @@
 > 本文件存放历史学习记录；当前状态面板统一查看 `docs/progress.md`。
 
 ## 2026-03-12
+- 模块：`M03` 分词与表示
+- 学习内容：subword trade-off、BPE/WordPiece/Unigram、embedding 参数量、tied embeddings、tokenizer 对 serving 成本的影响、中英混合代码 tokenizer 设计维度
+- 诊断表现：能把 vocab size、序列长度、prefill/decode、KV cache 串起来；WordPiece 的目标表述仍需再压稳
+- 提问：Q030-Q032
 - 模块：`M12-01` 推理优化（Prefill vs Decode）
 - 学习内容：prefill/decode 复杂度、KV cache、continuous batching、Paged KV、chunked prefill、speculative decoding、KV 量化
 - 诊断表现：能解释 prefill/decode 不同瓶颈；能估算 batching 利用率；能区分 PyTorch batch 与 kernel 调度 batch
@@ -31,4 +35,3 @@
 - 学习内容：Attention 回顾、Pre-LN/Post-LN、MQA/GQA、FlashAttention、Mini-GPT 实战引入
 - 诊断表现：Attention 公式与多头计算量有过易错点；位置编码与复杂度分析表现较好
 - 提问：Q001-Q005
-
