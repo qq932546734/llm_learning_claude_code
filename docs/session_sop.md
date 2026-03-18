@@ -10,25 +10,39 @@
 ```
 □ 读取 docs/progress.md
 □ 读取 docs/reminder_config.md
+□ 读取 docs/question_bank.md（最近沉淀的问题）
 □ 读取 docs/question_analysis.md（最后部分）
 □ 读取 docs/taxonomy.md（模块编号口径）
 □ 检查上次学习日期，判断是否需要复习检测
 ```
 
-### 2. 状态确认
+### 2. 模式入口（新增，必须）
+```
+□ 开场先确认："今天进入学习模式还是提问模式？"
+□ 若用户未明确选择：
+   - 默认按学习模式开场
+   - 若用户一上来就是独立问题，按提问模式响应
+□ 明确本轮目标：
+   - 学习模式 = 推进课程 / 复习 / 口述训练
+   - 提问模式 = 回答问题 / 总结 / 归类 / 回写 / 加入复习
+```
+
+### 3. 状态确认
 ```
 □ 向用户确认当前状态："上次我们学到XX，今天继续？"
 □ 列出待办事项（如有）："你还有X个费曼输出/练习题待完成"
-□ 提供3个选项：继续/复习/新主题
+□ 学习模式提供3个选项：继续/复习/新主题
+□ 提问模式提供2个选项：直接问 / 先看已沉淀问题
 ```
 
-### 3. 每日学习单（新增，必须）
+### 4. 每日学习单（学习模式必须）
 ```
 □ 读取 docs/interview_4week_plan.md
-□ 根据当前日期、上次学习进度、docs/reminder_config.md 的复习队列，生成“今日学习单”
+□ 根据当前日期、上次学习进度、docs/reminder_config.md 的复习队列、docs/question_bank.md 的近期新问题，生成“今日学习单”
 □ 开场先告诉用户：
    - 今天学什么新知识
    - 今天复习什么旧知识
+   - 今天先抽哪 1-2 个“自己问过的问题”热身
    - 每部分预计花多久
    - 若今日时间不足，优先保留哪一部分
 ```
@@ -38,6 +52,7 @@
 今天建议这样学（总计约 120 分钟）：
 1. 复习（20 分钟）
    - XX
+   - 问题热身：Qxxx / Qyyy
 2. 新知识（80 分钟）
    - XX
 3. 收束（20 分钟）
@@ -50,7 +65,7 @@
 **生成规则**
 ```python
 daily_plan = {
-    "review": 来自 reminder_config 的 P1/P2 + 昨日薄弱点,
+    "review": 来自 reminder_config 的 P1/P2 + 昨日薄弱点 + question_bank 近24小时新收录问题,
     "new_topic": 来自 interview_4week_plan 的当天主线任务,
     "wrap_up": 口述总结 / 错题 / 费曼输出,
     "time_budget": 默认 20/80/20 分钟
@@ -63,6 +78,13 @@ IF 用户明确说"先学新知识":
 IF 用户时间明显不足（<60 分钟）:
     压缩为 10/40/10 分钟
     只保留 1 个新知识点 + 1 个最高优先级复习点
+
+IF 当前为提问模式:
+    不生成完整“今日学习单”
+    改为输出“本次提问单”：
+      - 当前问题
+      - 预期归类模块
+      - 是否进入复习
 ```
 
 ---
@@ -71,12 +93,23 @@ IF 用户时间明显不足（<60 分钟）:
 
 ### 提问识别与记录（关键改进）
 
+**模式总原则**
+```python
+IF 当前为学习模式:
+    保留现有 [记录候选] 机制
+    高价值问题在会话结束时决定是否写入 question_bank.md
+
+IF 当前为提问模式:
+    默认把问题视为待沉淀资产
+    每题答完立刻执行：直接答案 -> 一句话总结 -> 模块/知识点归类 -> 是否加入复习
+```
+
 **核心原则：默认偏向记录，避免漏记**
 ```python
 # 判断目标不是"严格筛掉无关问题"，而是"尽量不漏掉暴露疑惑的学习问题"
 IF 无法快速确定"这只是随口确认"还是"真实认知卡点":
     先标记为 [记录候选]
-    会话结束时再决定是否正式写入 question_analysis.md
+    会话结束时再决定是否正式写入 question_bank.md / question_analysis.md
 ```
 
 **触发条件（满足任一即记录候选）：**
@@ -168,6 +201,32 @@ FOR 本次会话中的每一次用户追问/澄清/反问:
             补入 session_questions
 ```
 
+**question bank 写入判定**
+```python
+IF 当前为提问模式 AND 问题属于LLM学习范围:
+    默认写入 docs/question_bank.md
+
+ELSE IF 当前为学习模式:
+    IF 问题满足以下任一条件:
+        - 属于当前模块核心知识点
+        - 暴露稳定盲区或重复混淆
+        - 后续值得单独复习/抽查
+        - 具有较高迁移价值（边界、对比、设计动机、工程权衡）
+    THEN:
+        写入 docs/question_bank.md
+    ELSE:
+        仅保留在会话层或 docs/question_analysis.md
+```
+
+**提问模式标准输出模板**
+```markdown
+问题：...
+回答：...
+总结：...
+归类：Mxx / 知识点
+复习状态：新收录 / 会但不稳 / 不加入复习（仅流程确认）
+```
+
 ---
 
 ## 会话结束流程（关键！防止遗忘）
@@ -188,18 +247,23 @@ FOR 本次会话中的每一次用户追问/澄清/反问:
    - 下次学习建议更新
    - 复习检测题更新
 
-□ 3. 更新 docs/question_analysis.md（最容易遗忘！）
+□ 3. 更新 docs/question_bank.md（新增，默认先检查）
+   - 提问模式问题是否已写入
+   - 学习模式高价值问题是否已转入知识库
+   - 是否补充模块/知识点/复习状态/下次复习建议
+
+□ 4. 更新 docs/question_analysis.md（最容易遗忘！）
    - 检查本次会话是否有标记"[记录候选]"的提问
    - 为每个提问添加分析块
    - 更新提问画像统计
    - 如果提问数≥3，更新思维特点雷达图
 
-□ 4. 对照 docs/interview_4week_plan.md
+□ 5. 对照 docs/interview_4week_plan.md
    - 标记今日任务是否完成 / 顺延 / 偏离
    - 若偏离，补一句“明天如何接回主线”
 
 ### 状态同步（口头向用户确认）
-□ 向用户宣读："本次已记录X个提问，更新Y个文件"
+□ 向用户宣读："本次已记录X个提问，其中Y个进入 question bank，更新了Z个文件"
 □ 确认下次学习目标
 □ 设置提醒（如果需要）
 ```
@@ -218,7 +282,8 @@ def on_user_question(question):
         session_questions.append({
             "content": question,
             "timestamp": now(),
-            "draft_analysis": quick_analyze(question)
+            "draft_analysis": quick_analyze(question),
+            "bank_candidate": should_enter_question_bank(question)
         })
         return f"[Q{len(session_questions)}] {response}"
 ```
@@ -246,6 +311,7 @@ def on_user_question(question):
 ```
 用户说：
 - "记录这个问题" → 立即写入question_analysis.md
+- "加入知识库" → 立即写入question_bank.md
 - "更新进度" → 立即更新progress.md
 - "检查清单" → 显示当前会话的检查清单状态
 - "你忘了记录" → 我立即道歉+补录+解释防遗忘措施
@@ -254,9 +320,11 @@ def on_user_question(question):
 ### 透明化展示
 ```
 每次更新后向用户展示：
-"✅ 已更新 docs/question_analysis.md
-   - 新增 Q006: Flash Attention重计算
-   - 更新思维画像: 工程思维 50%→60%"
+"✅ 已更新 docs/question_bank.md
+   - 新增 Q0xx: xxx
+   - 归类到 Mxx / 知识点
+✅ 已更新 docs/question_analysis.md
+   - 补充认知模式分析"
 ```
 
 ---
@@ -267,7 +335,7 @@ def on_user_question(question):
 ```
 1. 立即道歉
 2. 询问："请指出是哪个问题，我立即补录"
-3. 补录到question_analysis.md
+3. 补录到question_bank.md / question_analysis.md
 4. 在文档中添加：
    "补录说明: 此问题原本在X会话提出，因Y原因漏记，现已补录"
 5. 报告："已补录，并更新了防遗忘流程以避免再次发生"
@@ -280,25 +348,10 @@ def on_user_question(question):
 ### 测试新的SOP
 ```
 下次会话应验证：
-□ 开始时是否正确读取了3个文件
+□ 开始时是否正确读取了核心文件（含 question_bank.md）
+□ 开场是否先确认“学习模式 / 提问模式”
 □ 提问后是否有"[记录候选]"标记
+□ 提问模式下是否产出“回答 -> 总结 -> 归类 -> 回写”
 □ 结束时是否执行了检查清单
 □ 用户是否收到了更新确认
 ```
-
----
-
-## 当前会话执行（现在立即做）
-
-根据新SOP，我现在执行会话结束流程：
-
-### 检查清单执行
-□ 1. progress.md - 已更新（费曼输出记录）
-□ 2. reminder_config.md - 需要更新上次学习日期
-□ 3. question_analysis.md - 已更新（Q003-Q005已记录）
-
-### 待办确认
-- 费曼输出：3个全部完成 ✅
-- 下次学习：等待用户选择主题
-
-**状态：本次会话文档更新完成！**

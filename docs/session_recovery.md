@@ -9,6 +9,8 @@
 # 请让我执行这些命令
 Read /Users/didi/work/llm_learning_claude_code/docs/progress.md
 Read /Users/didi/work/llm_learning_claude_code/docs/reminder_config.md
+Read /Users/didi/work/llm_learning_claude_code/docs/question_bank.md
+Read /Users/didi/work/llm_learning_claude_code/docs/question_analysis.md
 Read /Users/didi/work/llm_learning_claude_code/docs/session_recovery.md
 ```
 
@@ -16,14 +18,15 @@ Read /Users/didi/work/llm_learning_claude_code/docs/session_recovery.md
 - ✅ 你的学习风格：诊断式分层，当前层级L2.5
 - ✅ 学习目标：面试准备 + 基础巩固
 - ✅ 当前进度：以 `docs/progress.md` 为准（模块编号口径见 `docs/taxonomy.md`）
+- ✅ 最近沉淀的问题：以 `docs/question_bank.md` 为准
 - ✅ 薄弱点：Attention softmax细节、MQA计算量理解、LayerNorm原因
 - ✅ 待办：以 `docs/progress.md` / `docs/reminder_config.md` 为准
 
 ### 步骤3: 继续学习
 根据上次进度，我会提供3个选项：
-1. 先完成上次的费曼输出
-2. 复习薄弱点（我会出3道检测题）
-3. 继续新主题
+1. 学习模式：继续主线 / 复习薄弱点 / 新主题
+2. 提问模式：先回答当前问题并沉淀到知识库
+3. 混合模式：先处理 1 个问题，再回到学习主线
 
 ---
 
@@ -64,8 +67,9 @@ Read /Users/didi/work/llm_learning_claude_code/docs/session_recovery.md
 我是Claude，每次对话开始时我可能没有之前的上下文。但只要你：
 
 1. **在项目目录下对话** (`/Users/didi/work/llm_learning_claude_code/`)
-2. **让我读取上述3个文件**
-3. **或直接说"继续上次的学习"**
+2. **让我读取上述核心文件**
+3. **或让我读取 `docs/question_bank.md` / `docs/question_analysis.md` 恢复问题上下文**
+4. **或直接说"继续上次的学习"**
 
 我就能立即恢复全部上下文，无缝继续。
 

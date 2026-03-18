@@ -10,6 +10,7 @@
 - 学习进度：`docs/progress.md`
 - 学习日志：`docs/learning_journal.md`
 - 学习提醒：`docs/reminder_config.md`
+- 问题知识库：`docs/question_bank.md`
 - 提问归档与分析：`docs/question_analysis.md`
 - 会话 SOP：`docs/session_sop.md`
 - 会话恢复：`docs/session_recovery.md`
