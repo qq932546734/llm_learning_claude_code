@@ -12,11 +12,13 @@
 - 工程机制直觉：如 KV cache 的读写路径、连续 batching、显存/带宽主瓶颈。
 
 ### 下次优先复习题
+- M01：残差连接为什么让训练更稳定，为什么现代 LLM 多采用 pre-norm / RMSNorm，如何严谨解释 pre-LN / post-LN 的口头叫法。
+- M09：为什么 `SFT` 后还需要偏好对齐，`RLHF / RLAIF / Constitutional AI` 的关系，以及为什么规则化 `AI feedback` 更容易把权衡推向保守。
 - M10：beam search 为什么不适合很多开放式生成任务，失败模式如何映射到解码参数。
 - M07：少量高质量 SFT 数据为什么有效，SFT 副作用为什么更准确地说是“窄分布监督重塑行为”。
 - M03：BPE / WordPiece / SentencePiece 的目标差异，embedding 参数量与 tied embeddings。
 - M12：TTFT / TPOT / token/s，KV cache 为何不缓存历史 Q，Paged KV 的 block table。
-- M01 / M06：Attention 完整公式、LayerNorm 动机、ZeRO 1/2/3 与 FSDP 差异。
+- M06：ZeRO 1/2/3 与 FSDP 差异。
 
 ### 当前教学策略调整
 - 先给框架图和层级关系，再下钻公式与工程细节。
@@ -24,6 +26,7 @@
 - 对重点模块优先使用“估算题 + 变体题 + 口述题”组合，而不是只做概念问答。
 - 对已答对但表述仍偏松的知识点，增加“标准答案压缩训练”，重点压稳关键词而不是重复刷题。
 - 对解码类主题，优先使用“现象 -> 参数 -> 副作用”三段式训练，避免停留在参数定义表面。
+- 当单场会话同时包含“新学 + 复习”时，先显式标注两条线，再进入具体题目，降低上下文切换负担。
 
 ## 提问的价值
 
@@ -1228,4 +1231,79 @@ ELSE:
   - 明确 Unigram 是显式的 unigram subword 概率模型，WordPiece 更像似然导向的词表训练准则
   - 加入 SentencePiece 的层次边界：它是框架/工具，不是第四种训练目标
   - 补充当前生态中的使用情况：现代 decoder-only LLM 更多使用 BPE 家族，Google 系和多语言模型中 SentencePiece/Unigram 更常见
+```
+
+### Q033-Q035 - M01 残差 / Pre-Norm / RMSNorm 主线补强
+```yaml
+时间: 2026-03-18
+模块: M01 Transformer 架构深度解析
+问题:
+  - "当前LLM中的Layernorm主流的做法是pre-layernorm还是post-layernorm，为什么？"
+  - "帮我介绍一下RMSNorm吧"
+  - "为什么残差连接可以让训练更稳定呢？"
+
+提问分析:
+  认知层级: L1澄清型 → L2因果串联型
+  盲区类型: 术语边界不清（LayerNorm / RMSNorm / pre-norm 口语混用）+ 因果链断层（残差稳定性、pre-norm 稳定性、RMSNorm 工程选择未完全串起来）
+  思维特点: 系统性思维 + 工程思维（倾向把架构位置、训练稳定性和工程实现放在一条链上理解）
+
+教学响应:
+  - 先把三个问题收束成一条主线：残差主干 -> pre-norm 更稳 -> RMSNorm 更轻
+  - 压稳术语口径：口头上的 pre-LN / post-LN 很多时候其实是在说 pre-norm / post-norm
+  - 强调残差连接不只是“防梯度消失”，还要带出 identity path 和增量修正
+  - 强调 RMSNorm 的关键不是“它还是 LN”，而是“它少了减均值，但保留了控尺度”
+```
+
+## 2026-03-21 会话补记（含 M09 首轮学习）
+
+- 本次会话先完成 `M05 / M07 / M12 / M10 / M01 / M03` 的快答复习，再正式进入 `M09`；学习过程中明确提出了“哪些是新问题、哪些是复习”的区分需求，说明当前在长会话里对“上下文切换成本”较敏感，后续宜继续显式拆线。
+- 从回答表现看，`M09` 的理解建立速度较快，能迅速把新内容接到既有的 `预训练 -> SFT -> RLHF` 框架上；说明一旦给出结构化框架，迁移吸收能力较强。
+- 当前新增薄点主要不在概念完全不懂，而在三类术语精度：一是 `M07` 中仍会把“高信号、高一致性监督”说成“高信息密度”；二是 `M12` 中仍需继续压准 `prefill / TTFT / TPOT`；三是 `M09` 中更容易先想到 `helpful vs harmless`，而漏掉 `honest` 与“让用户满意”的冲突。
+- 教学上下一步应优先用 `M09` 的迁移题收束首轮学习，再穿插 `M05 / M07 / M12` 的一句话快答，不建议下一轮一开始就切回全新模块。
+
+### Q074-Q076 - M09 高级对齐技术首轮
+```yaml
+时间: 2026-03-21
+模块: M09 高级对齐技术
+问题:
+  - "既然 SFT 已经能教模型按指令回答了，为什么还需要做偏好对齐？"
+  - "为什么不能只靠更高质量、更大规模的 SFT 数据，来完全替代偏好对齐？"
+  - "RLHF 和 RLAIF 的核心区别是什么？"
+  - "Constitutional AI 想解决什么问题？它和普通的 RLAIF 有什么关系？"
+  - "为什么说 helpful / harmless / honest 往往存在张力，不能简单靠一个单一目标自动兼顾？"
+  - "为什么即使有了 Constitutional AI，也不能完全不要人类校准？"
+  - "RLAIF 和 Constitutional AI 的关系与区别是什么？"
+  - "为什么规则化的 AI feedback 有时会让模型变得更保守？"
+  - "如果一个团队说：我们只要把 AI judge 做得足够强，就可以完全替代人类偏好标注。你会怎么反驳？"
+
+提问分析:
+  认知层级: L2关联型 → L3权衡分析型
+  盲区类型: 边界不清（SFT vs 偏好对齐的分工）+ 层级错位（RLHF / RLAIF / Constitutional AI 的关系）+ 权衡分析（helpful / harmless / honest 的目标冲突）
+  思维特点: 系统性思维 + 工程思维 + 规范性判断意识（倾向先建立总框架，再看反馈来源、价值函数和系统性副作用）
+
+教学响应:
+  - 先用 `预训练 -> SFT -> 偏好对齐` 搭桥，防止把新模块学成离散概念堆
+  - 对 `RLHF / RLAIF / Constitutional AI` 采用“共同点 -> 区别 -> 边界”三步对比，而不是分别定义
+  - 把 `helpful / harmless / honest` 放到具体场景里讲，避免停留在抽象标签
+  - 对“规则化 AI feedback 为什么更保守”“AI judge 为什么不能彻底替代人”优先用迁移题训练，强化价值函数与系统副作用的联系
+```
+
+### Q078-Q079 - M08 PPO / DPO 边界重学
+```yaml
+时间: 2026-03-23
+模块: M08 RLHF
+问题:
+  - "RLHF 里的 KL penalty 到底加在哪？"
+  - "Reference model 和 Reference policy 有什么区别吗？"
+
+提问分析:
+  认知层级: L1澄清型 → L2链路辨析型
+  盲区类型: 训练链路边界不清（reward shaping vs clip loss）+ 抽象层级混淆（policy 分布 vs 具体冻结模型）
+  思维特点: 系统性思维 + 工程思维（不仅问概念定义，还在追问训练图里每个对象究竟放在哪、约束什么）
+
+教学响应:
+  - 把 `RLHF-PPO` 重新拆成“生成回答 -> 算 RM 分数 -> 算每 token 的 KL 惩罚 -> 合成 reward -> 算 return/advantage -> 进 PPO loss”的完整链路
+  - 显式区分三类对象：`reference model/reference policy` 负责分布锚点，`pi_old` 负责单步更新约束，`value model` 负责回报基线
+  - 在 `DPO` 处继续强调“隐式奖励不等于没有奖励概念”，避免把“不要显式 Reward Model”误听成“训练目标里没有奖励”
+  - 下一轮优先用 1 分钟口述压稳 `PPO vs DPO`、`KL penalty` 放置位置，以及 `reference / pi_old` 的角色边界
 ```
