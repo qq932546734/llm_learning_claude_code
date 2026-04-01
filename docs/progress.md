@@ -4,11 +4,11 @@
 > 当前状态面板；历史记录见 `docs/learning_journal.md`。
 
 ## 当前模块
-- 当前学习：[`M13 多模态 LLM`](../modules/M13_multimodal.md) / [`M14 Agent 与工具使用`](../modules/M14_agents_tool_use.md) / [`M03 分词与表示`](../modules/M03_tokenization_and_representation.md) / [`M11 提示工程进阶`](../modules/M11_prompt_engineering.md) / [`M09 高级对齐技术`](../modules/M09_advanced_alignment.md) / [`M08 人类反馈强化学习`](../modules/M08_rlhf.md) / [`M12 生产部署`](../modules/M12_serving_and_deployment.md) / [`M05 长文本建模`](../modules/M05_long_context.md) / [`M07 指令微调`](../modules/M07_instruction_tuning.md)
+- 当前学习：[`M15 模型可解释性`](../modules/M15_interpretability.md) / [`M13 多模态 LLM`](../modules/M13_multimodal.md) / [`M14 Agent 与工具使用`](../modules/M14_agents_tool_use.md) / [`M03 分词与表示`](../modules/M03_tokenization_and_representation.md) / [`M11 提示工程进阶`](../modules/M11_prompt_engineering.md) / [`M09 高级对齐技术`](../modules/M09_advanced_alignment.md) / [`M08 人类反馈强化学习`](../modules/M08_rlhf.md) / [`M12 生产部署`](../modules/M12_serving_and_deployment.md) / [`M05 长文本建模`](../modules/M05_long_context.md) / [`M07 指令微调`](../modules/M07_instruction_tuning.md)
 - 当前层级：L2.5（理解层偏应用）
-- 当前目标：推进 `Week 3 / Day 2` 的 `M13` 多模态 LLM（下），重点压稳“多模态 instruction tuning = 基于视觉证据按指令回答”与“多模态评估不能只看答对，还要看是否真的依赖视觉证据”两条任务线；并并行带 `M03` 的 `embedding / tied embeddings / tokenizer system trade-off`
+- 当前目标：已完成 `Week 3 / Day 2` 的 `M13` 多模态 LLM（下）收束与配套 `M03` 复习；下次从 `Week 3 / Day 3` 重开，主线切到 `M15` 模型可解释性，复习带 `M01` 的 `Attention` 完整公式与 `LayerNorm` 动机
 - 推荐产物：1 页 `M14` 边界卡（`function calling / tool use / planning / observe / re-plan`）+ 1 页 `M03` tokenizer trade-off 卡（`vocab / seq len / prefill / decode / TTFT / TPOT`）
-- 本次进展：2026-03-31 先完成 `Week 3 / Day 1` 的收束：开场用 `Q078` 继续压稳“`KL penalty` 先进入 reward shaping，再流向 `return / advantage / clip loss`”，随后把 `M13`（上）的结构线、成本线与任务线正式收口，已能较稳口述“`vision encoder -> projector -> LLM`”“为什么多模态不是图片转文字再给普通 `LLM`”“为什么多模态输入通常先恶化 `TTFT`”“为什么会看图不等于会基于视觉证据按指令回答”；同时完成 1 道 `M13 + M14` 迁移题，已能在“报销单照片 -> OCR / 检索 / 系统写入”场景下识别什么时候需要工具，以及为什么高风险 / 高成本 / 强权限约束场景不该让模型自由选工具。在此基础上，已正式进入 `M13`（下）的主线，当前已能较稳回答“多模态 instruction tuning 教的不是单纯会看图，而是基于视觉证据按指令回答”“为什么多模态评估不能只看答对”“遮图后准确率下降很少说明模型未充分体现视觉证据依赖”“图片问答准确率高本身不足以单独证明系统设计得好”。此外也已带着预热 `M03`：当前能较稳回答 `embedding` 的定义、`tied embeddings` 的作用与代价、为什么大 `vocab` 不一定更好、以及为什么 tokenizer 会同时影响 `prefill / decode`。当前仍需继续压稳四点：一是把 `projector` 固定成“桥接层 / 对齐接口”，避免再说成“把图片变成文本 token”；二是把“多模态 instruction tuning = 证据使用能力 + 指令遵循能力”压成更短口径；三是把“不能只看答对”继续压成更工程化的评估表达，如遮图/扰动/反事实验证；四是继续推进 `M13`（下）剩余内容，并把 `M03` 的 `embedding 参数量估算 / tied embeddings / tied vs untied trade-off` 系统收束
+- 本次进展：2026-04-01 已补完 `Week 3 / Day 2` 的遗留主线。开场先用 `Q078` 回抽 `RLHF-PPO` 中 `KL penalty` 的放置层级，当前已能较稳说出“先在 reward 侧做 shaping，再流向 `return / advantage / clip loss`”，但仍需继续避免把 `advantage` 简化成“reward 减平均值”；随后完成 `Q031` 复习，当前已能区分 `WordPiece` 的“似然导向训练准则”与 `Unigram` 的“显式概率模型”两层口径。`M13` 方面，今天已把 `instruction tuning = 基于视觉证据按指令回答` 与“多模态评估不能只看答对”两条主线压到 1-2 句短口述，也完成了“遮图后准确率只小幅下降说明什么”的评估边界题与 1 道 `M13 + M14` 迁移题；当前已能较稳说出“答对不等于真的用了图”，并能用 `语言先验 / 数据偏置 / 视觉证据依赖` 解释为什么需要遮图、关键区域扰动、反事实替换等评估。`M03` 方面，今天已完成 `tied embeddings`、`tokenizer 为什么同时影响 prefill / decode`、以及 `50k x 4096` 的 `embedding` 参数量估算题，当前已能算出单个 `embedding` 约 `205M` 参数，并区分 `tied ≈ 205M`、`untied ≈ 410M`。本轮 `Day 2` 已可视为完成；下次应按 `Week 3 / Day 3` 切到 `M15` 主线，并带 `M01` 的 `Attention` 完整公式与 `LayerNorm` 动机复习
 - 补充盘点：2026-04-01 在提问模式下完成一次 `modules M01-M16` 课程体检。结论是：若目标是“面试准备 + 基础巩固”，当前主干覆盖基本够用；但若目标是“较完整的现代 LLM 知识图谱”，主线之外还需要扩展主题 `E01` ~ `E06`：`E01` 评估与基准测试、`E02` 安全与红队、`E03` 数据工程、`E04` RAG 与检索、`E05` 量化与服务栈、`E06` 现代架构扩展。盘点时判断：`M01 / M03 / M06 / M07 / M08 / M12` 明显更实，而 `M09 / M13 / M14 / M15 / M16` 在 `modules/` 文件中原本偏提纲级，因此后续补强优先采用“先做模块正文静默回写、再扩 `E01` ~ `E06`”的顺序
 - 补强策略：课程补强默认采用“`当前主线冻结 + 旧复习优先 + 新内容延后激活`”。也就是当前 `Week 3 / Week 4` 主线不插入新模块，已有复习队列维持原优先级；新增扩展主题只进入 `Week 4+` 的 `E01` ~ `E06` 延长期或 `Day 7` 弹性日，在正式开始前不提前制造新的 `24 小时 / 3 天` 复习压力
 - 静默回写：已完成第一批 `modules/` 资产回写，覆盖 `M09 / M13 / M14 / M15 / M16`。本次只补模块正文的“主线定义 / 边界 / 工程 trade-off / 高频问法 / 场景题”，不改变当前学习顺序，也不新增正式复习压力；若后续回写中出现此前未正式学过的高频点，再按“补丁式回访”进入复习，而不是整模块重开
@@ -131,16 +131,16 @@
 - `docs/question_analysis.md` 继续负责认知画像；`docs/question_bank.md` 负责可复习的问题索引；`docs/reminder_config.md` 负责安排回看时间。
 
 ## 下一步建议
-1. 继续推进 `Week 3 / Day 2` 的 `M13` 多模态 LLM（下），优先补完“instruction tuning / 视觉证据依赖 / 评估边界”的剩余巩固题。
-2. 先做 `M13` 的 24 小时回顾，重点回抽“标准结构 / TTFT / instruction tuning / 不能只看答对”四条线。
-3. 并行推进 `M03` 的 `embedding / tied embeddings / 参数量估算`，把预热内容收成 2-3 句面试口径。
-4. 维持 `M14` 的 observation 异常后 `re-plan` 场景题，以及 `M08` 的短口述复测。
-5. 不打断当前主线的前提下，后续课程资产补强优先级可按 `E01 -> E02 -> E03 -> E04 -> E05 -> E06` 推进。
-6. 补强执行顺序先做“已学深度反写回 `modules/`”，再进入 `Week 4+` 延长期的 `E01` ~ `E06` 扩展主题，避免一边继续主线、一边摊薄已有复习质量。
+1. 下次按 `Week 3 / Day 3` 开场，正式进入 `M15` 模型可解释性首轮学习。
+2. 先补 `M01` 的到期复习：`Attention` 完整公式 + `LayerNorm` 动机，并带一轮 `残差 -> pre-norm -> RMSNorm` 短口述。
+3. 把今天完成的 `M13` 再做 1 次超短回钩，重点固定“答对不等于真的用了图，要看视觉证据依赖”。
+4. 把今天完成的 `M03` 再做 1 次回钩，重点固定 `tied embeddings` 与 `tied / untied` 参数量估算。
+5. 不打断当前主线的前提下，后续课程资产补强优先级仍按 `E01 -> E02 -> E03 -> E04 -> E05 -> E06` 推进。
+6. 补强执行顺序仍先做“已学深度反写回 `modules/`”，再进入 `Week 4+` 延长期的 `E01` ~ `E06` 扩展主题，避免一边继续主线、一边摊薄已有复习质量。
 
 ## 学习统计
 - 已完成重点模块：9 个
 - 当前进行中模块：8 个
-- 最近主线学习日期：2026-03-31
+- 最近主线学习日期：2026-04-01
 - 最近文档盘点 / 资产整理：2026-04-01
 - 学习日志入口：`docs/learning_journal.md`
