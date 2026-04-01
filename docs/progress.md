@@ -1,14 +1,17 @@
 # 学习进度追踪
 
-> 更新日期: 2026-03-24
+> 更新日期: 2026-04-01
 > 当前状态面板；历史记录见 `docs/learning_journal.md`。
 
 ## 当前模块
-- 当前学习：[`M11 提示工程进阶`](../modules/M11_prompt_engineering.md) / [`M09 高级对齐技术`](../modules/M09_advanced_alignment.md) / [`M08 人类反馈强化学习`](../modules/M08_rlhf.md) / [`M05 长文本建模`](../modules/M05_long_context.md) / [`M07 指令微调`](../modules/M07_instruction_tuning.md) / [`M12 生产部署`](../modules/M12_serving_and_deployment.md)
+- 当前学习：[`M13 多模态 LLM`](../modules/M13_multimodal.md) / [`M14 Agent 与工具使用`](../modules/M14_agents_tool_use.md) / [`M03 分词与表示`](../modules/M03_tokenization_and_representation.md) / [`M11 提示工程进阶`](../modules/M11_prompt_engineering.md) / [`M09 高级对齐技术`](../modules/M09_advanced_alignment.md) / [`M08 人类反馈强化学习`](../modules/M08_rlhf.md) / [`M12 生产部署`](../modules/M12_serving_and_deployment.md) / [`M05 长文本建模`](../modules/M05_long_context.md) / [`M07 指令微调`](../modules/M07_instruction_tuning.md)
 - 当前层级：L2.5（理解层偏应用）
-- 当前目标：把 `M08 / M09` 从“24 小时急复习”压到“3 天内稳定复测”，同时完成 `M11` 上半部分首轮学习并进入结构化抽取 prompt 实战与兜底设计
-- 推荐产物：1 页 `M08` 对比卡（`PPO vs DPO`）+ 1 页 `M09` 对齐路线图 + 1 版客服对话结构化抽取 prompt 骨架
-- 本次进展：2026-03-24 按学习模式先完成原计划中的复习与收束：先用 `Q078 / Q076` 热身，重新口述了 `RLHF-PPO` 里 `KL penalty` 的位置，并补清了 `reward shaping / shaped reward` 的含义；随后继续压稳了 `reference policy / reference model / pi_old` 的分工、`PPO vs DPO` 的根本区别，以及为什么 `DPO` 不需要显式 `reward model` 但不等于没有奖励概念。`M09` 部分完成了“`RLHF / RLAIF / Constitutional AI` 的关系”和“为什么 `Constitutional AI` 更显式也不等于更客观、更不等于彻底解决对齐”的两轮口述，当前已经能较稳沿着“反馈来源 / 偏好标准表达方式 / 人类校准”三层主线回答。之后正式进入 `M11` 首轮，建立了 `instruction design -> few-shot / decomposition -> 能力边界` 的基本框架，并能按“标签口径 -> schema -> few-shot”给出客服对话结构化抽取任务的设计顺序。今晚又做了一次短收束：`M08` 用 `Q080` 热身时，已经知道 `KL penalty` 最终会流向 `return / advantage / clip loss`，但仍会把 `reward shaping` 误说成“把整句 reward 反向传给每个 token”；`M09` 已补回 `helpful / harmless / honest` 的主干张力，也能说出 `honest` 不等于让用户满意，但三者的对称表达还不够自然；`M11` 则把 `few-shot` 进一步压到“直接暴露输入输出模式、减少歧义”这一层，同时开始做客服对话结构化抽取 prompt 骨架，已知道应先澄清标签口径与字段语义，但当前 schema 仍少于 4 个字段，且 `refund` 字段口径与 `few-shot` 示例仍未补完。当前仍需继续压稳七点：一是把 `reward shaping` 稳定说成“原始任务奖励 + 训练时加入的约束项”，避免再出现“反向分摊到每个 token”的表述；二是继续把 `reference` 稳定表述为“分布锚点”，避免回落到“防遗忘知识”的口径；三是把 `M08` 的 1 分钟总串讲再练到更自然；四是把 `M09` 里 `helpful / harmless / honest` 压成更对称的 4 句面试口径；五是把 `M11` 的结构化输出失败模式与程序化防御压成标准答案；六是把“标签口径先于 few-shot”内化成工程默认顺序，并补完“字段歧义 -> schema -> examples”的完整骨架；七是 `M12` 继续压稳 `TTFT / TPOT / token/s` 的统一口径
+- 当前目标：推进 `Week 3 / Day 2` 的 `M13` 多模态 LLM（下），重点压稳“多模态 instruction tuning = 基于视觉证据按指令回答”与“多模态评估不能只看答对，还要看是否真的依赖视觉证据”两条任务线；并并行带 `M03` 的 `embedding / tied embeddings / tokenizer system trade-off`
+- 推荐产物：1 页 `M14` 边界卡（`function calling / tool use / planning / observe / re-plan`）+ 1 页 `M03` tokenizer trade-off 卡（`vocab / seq len / prefill / decode / TTFT / TPOT`）
+- 本次进展：2026-03-31 先完成 `Week 3 / Day 1` 的收束：开场用 `Q078` 继续压稳“`KL penalty` 先进入 reward shaping，再流向 `return / advantage / clip loss`”，随后把 `M13`（上）的结构线、成本线与任务线正式收口，已能较稳口述“`vision encoder -> projector -> LLM`”“为什么多模态不是图片转文字再给普通 `LLM`”“为什么多模态输入通常先恶化 `TTFT`”“为什么会看图不等于会基于视觉证据按指令回答”；同时完成 1 道 `M13 + M14` 迁移题，已能在“报销单照片 -> OCR / 检索 / 系统写入”场景下识别什么时候需要工具，以及为什么高风险 / 高成本 / 强权限约束场景不该让模型自由选工具。在此基础上，已正式进入 `M13`（下）的主线，当前已能较稳回答“多模态 instruction tuning 教的不是单纯会看图，而是基于视觉证据按指令回答”“为什么多模态评估不能只看答对”“遮图后准确率下降很少说明模型未充分体现视觉证据依赖”“图片问答准确率高本身不足以单独证明系统设计得好”。此外也已带着预热 `M03`：当前能较稳回答 `embedding` 的定义、`tied embeddings` 的作用与代价、为什么大 `vocab` 不一定更好、以及为什么 tokenizer 会同时影响 `prefill / decode`。当前仍需继续压稳四点：一是把 `projector` 固定成“桥接层 / 对齐接口”，避免再说成“把图片变成文本 token”；二是把“多模态 instruction tuning = 证据使用能力 + 指令遵循能力”压成更短口径；三是把“不能只看答对”继续压成更工程化的评估表达，如遮图/扰动/反事实验证；四是继续推进 `M13`（下）剩余内容，并把 `M03` 的 `embedding 参数量估算 / tied embeddings / tied vs untied trade-off` 系统收束
+- 补充盘点：2026-04-01 在提问模式下完成一次 `modules M01-M16` 课程体检。结论是：若目标是“面试准备 + 基础巩固”，当前主干覆盖基本够用；但若目标是“较完整的现代 LLM 知识图谱”，仍缺 `评估 / benchmark`、`安全 / red teaming`、`数据工程 / 数据配比`、`RAG` 独立模块、`MoE / SSM / Mamba`、`量化 / serving stack` 等横切主题。盘点时判断：`M01 / M03 / M06 / M07 / M08 / M12` 明显更实，而 `M09 / M13 / M14 / M15 / M16` 在 `modules/` 文件中原本偏提纲级，因此后续补强优先采用“先做模块正文静默回写、再扩新主题”的顺序
+- 补强策略：课程补强默认采用“`当前主线冻结 + 旧复习优先 + 新内容延后激活`”。也就是当前 `Week 3 / Week 4` 主线不插入新模块，已有复习队列维持原优先级；新增主题只进入 `Week 4+` 延长期或 `Day 7` 弹性日，在正式开始前不提前制造新的 `24 小时 / 3 天` 复习压力
+- 静默回写：已完成第一批 `modules/` 资产回写，覆盖 `M09 / M13 / M14 / M15 / M16`。本次只补模块正文的“主线定义 / 边界 / 工程 trade-off / 高频问法 / 场景题”，不改变当前学习顺序，也不新增正式复习压力
 
 ## 已完成模块
 | 模块 | 状态 | 完成日期 | 备注 |
@@ -34,8 +37,11 @@
 | Transformer 为什么用 LayerNorm | M01 | 待回访 | 已学过，但适合口述重建 |
 | ZeRO/FSDP 选型直觉 | M06 | 待回访 | 面试/工程都常追问 |
 | tokenizer 对参数量/带宽影响 | M03 | 会但不稳 | 已能口述主干，需再做 1 次迁移题 |
+| 大 `vocab` vs 小 `vocab` 的系统 trade-off | M03 | 会但不稳 | 已能抓主线，仍需继续压稳“序列长度成本 vs 词表维度成本”的短口径 |
 | BPE / WordPiece / Unigram 目标差异 | M03 | 会但不稳 | 三者主干已能区分，仍需继续压稳 WordPiece 的“似然收益”与 Unigram 的“显式概率模型”口径 |
 | tokenizer 为什么同时影响 prefill / decode | M03 | 会但不稳 | 已能回答主干，需继续压稳 decode 中“输出层 / 词表大小 / 带宽”的专业口径 |
+| tied embeddings 的作用与代价 | M03 | 会但不稳 | 已能说共享输入 embedding 与输出投影，仍需避免把它说成“必然损伤性能” |
+| embedding 参数量估算 | M03 | 待回访 | 已进入预热，仍需补 1 轮显式估算题 |
 | WordPiece 的似然 / 概率口径 | M03 | 会但不稳 | 主干已通，仍需再做 1 次短口述，压稳“训练准则 vs 显式概率模型”的层次 |
 | tokenizer / WordPiece / Unigram 的层级关系 | M03 | 会但不稳 | 容易把上位概念与具体方法并列，需继续压稳“方法层 vs 系统影响层” |
 | RLHF 里的 `KL penalty` 放在哪 | M08 | 会但不稳 | 今天已理解 reward shaping 主线，但仍需继续避免与 `clip loss` 里的比值项混淆 |
@@ -50,9 +56,9 @@
 | 规则化 AI feedback 的保守化风险 | M09 | 会但不稳 | 已能说主干，仍需继续做迁移题 |
 | AI judge / Constitutional AI 仍需人类校准 | M09 | 会但不稳 | 已能说出“规则由人定 + judge 会继承或放大偏差”，仍需压成完整反驳题 |
 | Constitutional AI 的“更显式 / 更可审查”边界 | M09 | 会但不稳 | 已能稳定反驳“更显式 = 更客观 = 彻底解决对齐”，仍需继续压稳“价值判断仍在” |
-| few-shot 为什么常比抽象规则更有效 | M11 | 新学 | 已能说出“直接暴露输入输出模式、减少歧义”的主干，但仍需继续避免只停留在“更具体” |
-| prompt engineering 与模型能力边界 | M11 | 新学 | 已能说“改善表现不创造能力”，仍需继续压稳“能力调用 vs 能力创造”的区分 |
-| 结构化输出的失败模式与防御 | M11 | 新学 | 已开始落到客服抽取骨架实战，仍需把“字段歧义 / schema 不匹配 / 程序化重试 / 回退”串成标准答案 |
+| few-shot 为什么常比抽象规则更有效 | M11 | 会但不稳 | 已能说出“直接暴露输入输出模式、减少歧义”的主干，但仍需继续避免只停留在“更具体” |
+| prompt engineering 与模型能力边界 | M11 | 会但不稳 | 已能说“改善表现不创造能力”，仍需继续压稳“能力调用 vs 能力创造”的区分 |
+| 结构化输出的失败模式与防御 | M11 | 会但不稳 | 已开始落到客服抽取骨架实战，仍需把“字段歧义 / schema 不匹配 / 程序化重试 / 回退”串成标准答案 |
 | 解码参数的统一框架 | M10 | 会但不稳 | 已能按任务目标反推默认风格，仍需继续迁移到混合故障诊断 |
 | beam search 的长度偏置与任务边界 | M10 | 会但不稳 | 已能解释短句偏置，需继续压稳“为什么开放生成不默认用 beam” |
 | 失败模式与调参映射 | M10 | 会但不稳 | 已能做第二轮诊断，当前重点是“重复 + 过长”“放开后变脏”等混合场景下的排查顺序 |
@@ -66,13 +72,25 @@
 | KV cache 为什么不缓存历史 Q | M12 | 会但不稳 | 已能说主干，仍适合再抽 1 次与 TTFT/TPOT 一起串讲 |
 | TTFT / TPOT / token/s 的关系 | M12 | 会但不稳 | 主干已通，仍需继续压稳“首包 / 每 token 延迟 / 吞吐”的区分 |
 | Paged KV 的作用边界 | M12 | 会但不稳 | 已能说清 block table 作用，仍需继续压稳“优化管理，不直接消除带宽成本” |
+| continuous batching 的调度粒度 | M12 | 会但不稳 | 今天已纠正成“step 级动态补位”，仍需继续避免回落成“固定时间窗凑 batch” |
+| function calling / tool use / planning 的边界 | M14 | 会但不稳 | 已能稳定区分三者，后续主要压缩口述长度 |
+| tool selection 为什么属于 planning | M14 | 会但不稳 | 已能说出 `action selection` 主干，仍需继续提高自然度 |
+| Agent 体验为什么不只看 LLM 延迟 | M14 | 会但不稳 | 已能串起 `tool latency + TTFT + TPOT + 多轮往返`，仍需继续压成更短的系统口径 |
+| 什么时候不该让模型自由选择工具 | M14 | 会但不稳 | 仍需把判据稳定成“高风险 / 高成本 / 强权限约束” |
+| schema follow 不是强 agent 的充分条件 | M14 | 会但不稳 | 已能说主干，仍需继续压缩成 2-3 句标准答案 |
+| 混合故障诊断的排查顺序 | M10 | 会但不稳 | 已能按“先分布、后约束”回答，仍需继续压稳到更短面试口径 |
+| 多模态 instruction tuning 的目标 | M13 | 会但不稳 | 已能说主干，仍需继续压稳“证据使用能力 + 指令遵循能力”的联合目标 |
+| 多模态评估不能只看答对 | M13 | 会但不稳 | 已能说出语言先验/数据偏置风险，仍需继续压稳工程化评估口径 |
 
 ## 待复习项
 | 优先级 | 模块 | 状态 | 建议动作 |
 |--------|------|------|----------|
-| P1 | M11 | 新学 | 24 小时内口述 1 次“为什么 `few-shot` 有时比一大段抽象规则更有效”，要求明确“直接展示输入输出模式、减少歧义” |
-| P1 | M11 | 新学 | 24 小时内口述 1 次“为什么 prompt engineering 不能当万能药”，要求明确“能力调用 / 行为约束 != 创造新能力” |
-| P1 | M11 | 新学 | 24 小时内完成 1 道“客服对话结构化抽取”prompt 骨架题，要求先定义标签口径和 schema，再补 few-shot |
+| P1 | M14 | 会但不稳 | 3 天内再口述 1 次“为什么不该把是否自由选工具只理解成模型知识够不够”，要求明确“高风险 / 高成本 / 强权限约束” |
+| P1 | M14 | 会但不稳 | 3 天内再口述 1 次“为什么 schema follow 不是强 agent 的充分条件”，要求明确“格式正确 != 决策正确 / 会纠偏 / 会处理系统边界” |
+| P1 | M14 | 会但不稳 | 3 天内做 1 道 observation 异常后的 `re-plan` 场景题，覆盖“重试 / 换源 / 降级回复” |
+| P1 | M11 | 会但不稳 | 3 天内再口述 1 次“为什么 `few-shot` 有时比一大段抽象规则更有效”，要求明确“直接展示输入输出模式、减少歧义” |
+| P1 | M11 | 会但不稳 | 3 天内再口述 1 次“为什么 prompt engineering 不能当万能药”，要求明确“能力调用 / 行为约束 != 创造新能力” |
+| P1 | M11 | 会但不稳 | 3 天内再复述 1 次“客服对话结构化抽取”工程版 prompt，要求说清 `schema -> 判定口径 -> few-shot -> 合法 JSON + 兜底标签` |
 | P1 | M08 | 会但不稳 | 3 天内口述 1 次“`PPO vs DPO` 的主线区别”，要求明确“偏好优化而不是教会回答”、`Reward Model`、隐式奖励、长度偏置 |
 | P1 | M08 | 会但不稳 | 3 天内再复述 1 次“`RLHF-PPO` 里的 `KL penalty` 加在哪”，要求明确“reward shaping -> return / advantage -> clip loss”，并避免把 `advantage` 说成“reward 减平均收益” |
 | P1 | M08 | 会但不稳 | 3 天内再口述 1 次“`reference model / reference policy / pi_old` 分别约束什么”，要求把 `reference` 压稳成“分布锚点” |
@@ -81,7 +99,14 @@
 | P1 | M09 | 会但不稳 | 3 天内做 1 道“为什么 `Constitutional AI` 更显式、更可审查，不等于更客观、更不等于彻底解决对齐”的反驳题 |
 | P1 | M10 | 会但不稳 | 3 天内再做 1 轮“多现象并存 -> 排查顺序”诊断题，重点覆盖“重复 + 过长”“去模板化后变脏” |
 | P1 | M10 | 会但不稳 | 3 天内再口述 1 次“为什么任务目标而不是产品形态决定默认解码风格” |
-| P1 | M03 | 会但不稳 | 3 天内再口述 1 次“WordPiece 为什么是似然导向、Unigram 为什么更像显式概率模型” |
+| P1 | M03 | 会但不稳 | 3 天内再口述 1 次“WordPiece 为什么是似然导向、Unigram 为什么更像显式概率模型”，要求补上“同一句话可有多种切分且各自有概率” |
+| P1 | M03 | 会但不稳 | 3 天内口述 1 次“为什么 tokenizer 不只是预处理细节”，要求串起 `粒度 -> 参数量 -> prefill/decode -> 吞吐` |
+| P1 | M03 | 会但不稳 | 3 天内再口述 1 次“为什么大 `vocab` 不一定更好”，要求明确“长度相关成本 vs 词表维度成本” |
+| P1 | M03 | 会但不稳 | 3 天内再口述 1 次“`tied embeddings` 省了什么、牺牲了什么自由度”，要求避免绝对化说成“必然掉点” |
+| P1 | M03 | 待回访 | 3 天内做 1 道 `embedding` 参数量估算题，要求显式区分 tied / untied |
+| P1 | M13 | 会但不稳 | 24 小时内再口述 1 次“多模态 instruction tuning 到底在教什么”，要求明确“基于视觉证据 + 按指令回答” |
+| P1 | M13 | 会但不稳 | 24 小时内再口述 1 次“为什么多模态评估不能只看最后答对”，要求明确“语言先验 / 数据偏置 / 视觉证据依赖” |
+| P1 | M13 | 会但不稳 | 24 小时内做 1 道“遮图后准确率变化意味着什么”的评估题，要求避免直接下结论成“模型没训练好” |
 | P1 | M01 | 会但不稳 | 3 天内用 1 分钟串讲“残差 -> pre-norm -> RMSNorm”这条因果链 |
 | P1 | M05 | 会但不稳 | 3 天内再复述 1 次“为什么不能统一只用 `RAG` / 只用长上下文”，要求避免绝对化表述并答稳题意 |
 | P1 | M05 | 会但不稳 | 3 天内口述 1 次“RoPE/位置外推解决了什么、没解决什么”，要求明确“能处理更长位置 != 能有效利用长上下文” |
@@ -89,6 +114,7 @@
 | P1 | M07 | 会但不稳 | 3 天内口述 1 次“为什么少量高质量 SFT 数据也能明显改变行为”，要求明确“不是从零训练 + 高信号、高一致性监督 + 行为分布重塑” |
 | P1 | M12 | 会但不稳 | 3 天内口述 1 次“长上下文为什么会同时恶化 TTFT 和 TPOT”，要求串起 prefill / KV cache / 带宽 / Paged KV，并压准术语 |
 | P1 | M12 | 会但不稳 | 3 天内抽查 TTFT/TPOT/KV cache/Paged KV |
+| P1 | M12 / M14 | 会但不稳 | 3 天内再口述 1 次“为什么 agent latency 不能只看 LLM latency”，要求明确“多轮 `TTFT / TPOT` + tool latency + 往返轮数” |
 | P1 | M07 | 会但不稳 | 3 天内再口述 1 次“SFT 副作用的根源”，要求明确说出“窄分布 + 强监督约束” |
 | P1 | M07 | 会但不稳 | 3 天内再口述 1 次“为什么不能只把 SFT 的副作用总结成遗忘”，要求明确“遗忘不是全部，而是行为分布被窄分布监督重塑” |
 | P1 | M03 | 会但不稳 | 3 天内补 1 次 tokenizer 对比表口述，并做 1 道 prefill vs decode 权衡题 |
@@ -105,13 +131,15 @@
 - `docs/question_analysis.md` 继续负责认知画像；`docs/question_bank.md` 负责可复习的问题索引；`docs/reminder_config.md` 负责安排回看时间。
 
 ## 下一步建议
-1. 先从 `docs/question_bank.md` 抽 `Q080 / Q081` 做热身，分别把 `reward shaping` 和 `few-shot` 压成 3 句标准口径。
-2. 继续完成“客服对话结构化抽取”prompt 骨架，先补齐第 4 个字段、澄清 `refund_request` 的判定规则，再补 2 个 `few-shot` 示例。
-3. 回抽 `M09` 的 `helpful / harmless / honest`，把三者张力压成更对称的 4 句面试答案。
-4. 若当日仍有余量，再进入 Week 2 Day 3 的 `M11` 下半部分，重点压“结构化输出失败模式 -> 程序化防御”的映射。
+1. 继续推进 `Week 3 / Day 2` 的 `M13` 多模态 LLM（下），优先补完“instruction tuning / 视觉证据依赖 / 评估边界”的剩余巩固题。
+2. 先做 `M13` 的 24 小时回顾，重点回抽“标准结构 / TTFT / instruction tuning / 不能只看答对”四条线。
+3. 并行推进 `M03` 的 `embedding / tied embeddings / 参数量估算`，把预热内容收成 2-3 句面试口径。
+4. 维持 `M14` 的 observation 异常后 `re-plan` 场景题，以及 `M08` 的短口述复测。
+5. 不打断当前主线的前提下，后续课程资产补强优先级可按 `评估 / benchmark -> 安全 / red teaming -> 数据工程 -> RAG 单列 -> MoE / SSM / Mamba -> 量化 / serving stack` 推进。
+6. 补强执行顺序先做“已学深度反写回 `modules/`”，再进入 `Week 4+` 延长期的新主题扩展，避免一边继续主线、一边摊薄已有复习质量。
 
 ## 学习统计
 - 已完成重点模块：9 个
-- 当前进行中模块：6 个
-- 最后学习日期：2026-03-24
+- 当前进行中模块：8 个
+- 最后学习日期：2026-04-01
 - 学习日志入口：`docs/learning_journal.md`

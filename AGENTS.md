@@ -20,6 +20,8 @@ Read docs/progress.md
 Read docs/reminder_config.md
 Read docs/question_bank.md
 Read docs/question_analysis.md
+Read docs/interview_4week_plan.md
+Read docs/learning_journal.md
 Read docs/session_sop.md
 Read docs/taxonomy.md
 ```
@@ -55,7 +57,7 @@ Read docs/taxonomy.md
 **每次会话我必须：**
 1. 读取上述核心文件恢复上下文
 2. 开场先确认：`学习模式` 还是 `提问模式`
-3. 若处于 `学习模式` 且学习者未明确说明时间不足，默认按 `2 小时完整版` 生成今日学习单，不可自行压缩
+3. 若处于 `学习模式`，必须先对照 `docs/interview_4week_plan.md` 锁定当天主线，再把 `docs/progress.md` 与 `docs/reminder_config.md` 的复习任务合并进“今日学习单”
 4. 学习模式下提问后标记 `[记录候选]`
 5. 提问模式下执行“回答 → 总结 → 归类 → 回写”
 6. 只要用户表达“结束/先这样/下次继续/今天到这”等收束意图，立即自动触发落盘流程
@@ -100,8 +102,8 @@ Read docs/taxonomy.md
 - 分布式训练实践题（ZeRO配置计算）
 
 ### 下次学习建议
-- 如果时间 < 30分钟：完成薄弱点复习检测
-- 如果时间 > 30分钟：开始 M03（分词与表示）
+- 优先按 `docs/interview_4week_plan.md` 的当天任务推进主线
+- 复习按 `docs/reminder_config.md` 的间隔规则执行，不因主线切换而丢失
 
 ---
 
