@@ -235,7 +235,7 @@
 
 ---
 
-## Week 4+ 可选延长补强（默认不插入当前主线）
+## Week 4+ 可选延长补强（`E01`–`E06`，默认不插入当前主线）
 
 > 触发条件：仅当 `Week 1 ~ Week 4` 主线完成，或用户明确允许延长学习周期时启用。
 > 保护规则：不回头改写当前 `Week 3 / Week 4` 的日程；既有复习队列优先级保持不变；新增主题在正式开始前不提前生成新的间隔复习压力。
@@ -252,35 +252,35 @@
 
 ### 延长期优先级
 
-1. `评估 / benchmark / LLM-as-a-judge`
-2. `安全 / red teaming / jailbreak / prompt injection`
-3. `数据工程 / 清洗 / 去重 / 配比`
-4. `RAG / retrieval` 独立模块
-5. `量化 / serving stack / vLLM / TGI / TensorRT-LLM`
-6. `MoE / SSM / Mamba` 等架构扩展
+1. `E01` 评估与基准测试（`benchmark / LLM-as-a-judge`）
+2. `E02` 安全与红队（`red teaming / jailbreak / prompt injection`）
+3. `E03` 数据工程（`清洗 / 去重 / 配比`）
+4. `E04` RAG 与检索（`RAG / retrieval`）
+5. `E05` 量化与服务栈（`quantization / vLLM / TGI / TensorRT-LLM`）
+6. `E06` 现代架构扩展（`MoE / SSM / Mamba`）
 
 ### 建议的 6 天延长安排
 
 #### Day 1
-- 新学：`评估 / benchmark`
+- 新学：`E01` 评估与基准测试
 - 复习：沿用 `docs/reminder_config.md` 到期项，不额外压新复习
 
 #### Day 2
-- 新学：`安全 / red teaming`
+- 新学：`E02` 安全与红队
 - 复习：沿用到期项
 
 #### Day 3
-- 新学：`数据工程`
+- 新学：`E03` 数据工程
 - 复习：沿用到期项
 
 #### Day 4
-- 新学：`RAG / retrieval`
+- 新学：`E04` RAG 与检索
 - 复习：沿用到期项
 
 #### Day 5
-- 新学：`量化 / serving stack`
+- 新学：`E05` 量化与服务栈
 - 复习：沿用到期项
 
 #### Day 6
-- 新学：`MoE / SSM / Mamba`
+- 新学：`E06` 现代架构扩展
 - 收束：做 1 轮“主线 + 新补强主题”的系统地图串讲

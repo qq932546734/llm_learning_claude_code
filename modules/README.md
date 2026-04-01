@@ -1,6 +1,6 @@
-# Modules（Canonical：M01–M16）
+# Modules（Mainline：M01–M16，Extension：E01–E06）
 
-> 本目录是**学习入口**：所有学习内容按 `M01`–`M16` 组织。编号口径与映射见 `docs/taxonomy.md`。
+> 本目录是**学习入口**：主线内容按 `M01`–`M16` 组织，延长补强按 `E01`–`E06` 组织。编号口径与映射见 `docs/taxonomy.md`。
 
 ## 当前建议（Next）
 - 从 `M03` 开始：`modules/M03_tokenization_and_representation.md`
@@ -28,7 +28,16 @@
 - 第二梯队：`M02`、`M04`、`M07`、`M10`
 - 第三梯队：`M05`、`M09`、`M11`、`M13`、`M14`、`M15`、`M16`
 
+## 视图三：延长补强（E01–E06）
+- `E01` 评估与基准测试：`modules/E01_evaluation_and_benchmarking.md`
+- `E02` 安全与红队：`modules/E02_safety_and_red_teaming.md`
+- `E03` 数据工程：`modules/E03_data_engineering.md`
+- `E04` RAG 与检索：`modules/E04_rag_and_retrieval.md`
+- `E05` 量化与服务栈：`modules/E05_quantization_and_serving_stack.md`
+- `E06` 现代架构扩展：`modules/E06_modern_architecture_extensions.md`
+
 ## 使用约定
 - 学习记录统一查看：`docs/progress.md`
 - 复习调度统一查看：`docs/reminder_config.md`
 - 提问驱动教学调整统一查看：`docs/question_analysis.md`
+- `M01`–`M16` 是默认主线；`E01`–`E06` 只在 `Week 4+` 延长期或明确开启补强时使用

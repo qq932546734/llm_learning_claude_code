@@ -43,8 +43,10 @@
    - 默认取当前日期对应的计划日
    - 若上一计划日未完成，优先补最近未完成日，不跳过主线
 □ 再从 docs/reminder_config.md + docs/learning_journal.md 计算“今天到期 / 已逾期”的复习任务
+   - 已学模块若只是发生静默回写，不因正文补深而自动新增复习
+   - 只有显式标记为“净新增知识点”的内容，才以补丁式回访进入今日学习单
 □ 再用 docs/progress.md 补充“上次未收束项 / 本周薄弱点 / 与当天主线强相关的迁移题”
-□ 从 docs/question_bank.md 中抽 1-2 个“今天到期”或“最近新收录”的问题做热身
+□ 从 docs/question_bank.md 中抽 1-2 个“今天到期”或“最近新收录且复习建议不为暂不安排”的问题做热身
 □ 输出“今日学习单”时，不默认绑定固定总时长；改为按 `必做 / 应做 / 可选` 组织
 □ 开场先告诉用户：
    - 今天按 plan 走的主线是什么
@@ -76,7 +78,7 @@ daily_plan = {
     "mainline": 来自 interview_4week_plan 的当天计划日；若前一计划日未完成，则取最近未完成日,
     "review_due": 来自 reminder_config 的到期 / 逾期复习项，依据 learning_journal 的最近学习日期按间隔规则计算,
     "carry_over": 来自 progress.md 的未收束项 / 本周薄弱点 / 与 mainline 强相关的迁移题,
-    "warmup_questions": 来自 question_bank 的到期问题或近24小时新收录问题
+    "warmup_questions": 来自 question_bank 的到期问题，或近24小时新收录且 `复习建议` 不为 `暂不安排` 的问题
 }
 
 priority = [
@@ -90,7 +92,9 @@ priority = [
 hard_rules = [
     "当天主线必须保留，不能被复习完全挤掉",
     "已逾期 / 今天到期的复习必须进入今日学习单，不能无限顺延",
-    "progress.md 只能调深度、承接和补收束，不能单独覆盖当天 plan 主线"
+    "progress.md 只能调深度、承接和补收束，不能单独覆盖当天 plan 主线",
+    "已学模块的静默回写默认不触发新复习，除非该条内容被显式标记为净新增知识点",
+    "净新增知识点进入复习时，默认走补丁式回访，不重开整模块"
 ]
 
 IF 用户明确给出可用时间:
